@@ -1,5 +1,5 @@
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/MainNav";
@@ -22,9 +22,36 @@ import { LeafIcon } from "@/components/icons/LeafIcon";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
+  const [scrollSection, setScrollSection] = useState(1);
   const testimonialsRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
+  const featuresRef = useRef<HTMLElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
   
+  // Handle scroll events to change background
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!mainRef.current) return;
+      
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const fullHeight = document.body.scrollHeight;
+      
+      // Calculate which section we're in based on scroll position
+      const sectionCount = 4; // Total number of color transition sections
+      const sectionHeight = fullHeight / sectionCount;
+      const currentSection = Math.min(
+        sectionCount,
+        Math.max(1, Math.ceil(scrollPosition / sectionHeight))
+      );
+      
+      setScrollSection(currentSection);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setEmail("");
@@ -37,12 +64,11 @@ export default function HomePage() {
   };
   
   return (
-    <div className="min-h-screen flex flex-col">
+    <div ref={mainRef} className="min-h-screen flex flex-col">
       <MainNav />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32 container-padding">
-        <div className="absolute inset-0 bg-gradient-warm -z-10" />
+      <section className={`relative overflow-hidden py-20 md:py-32 container-padding scroll-section scroll-section-${scrollSection}`}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 animate-slide-up">
             <h1 className="text-gradient font-bold tracking-tight">
@@ -64,7 +90,7 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative h-[450px]">
             <div className="relative h-[400px] w-full bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden animate-fade-in">
               <img 
                 src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80" 
@@ -90,7 +116,8 @@ export default function HomePage() {
               </div>
             </div>
             
-            <div className="absolute -top-6 -right-6 glass-effect rounded-2xl p-4 animate-slide-down">
+            {/* Soil Moisture - Properly positioned with animation */}
+            <div className="floating-card -top-6 -right-6 z-10">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-full">
                   <WaterDropIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
@@ -102,7 +129,8 @@ export default function HomePage() {
               </div>
             </div>
             
-            <div className="absolute -bottom-6 -left-6 glass-effect rounded-2xl p-4 animate-slide-up">
+            {/* Crop Health - Properly positioned with animation */}
+            <div className="floating-card -bottom-6 -left-6 z-10" style={{animationDelay: "1.5s"}}>
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
                   <LeafIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
@@ -118,7 +146,11 @@ export default function HomePage() {
       </section>
       
       {/* Features Section */}
-      <section id="features" className="py-20 container-padding bg-white dark:bg-slate-900">
+      <section 
+        ref={featuresRef} 
+        id="features" 
+        className={`py-20 container-padding scroll-section scroll-section-${scrollSection}`}
+      >
         <div className="text-center mb-16">
           <h2 className="text-gradient mb-4">Key Features</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -161,7 +193,7 @@ export default function HomePage() {
           ].map((feature, index) => (
             <div 
               key={index} 
-              className="bg-secondary/50 dark:bg-slate-800 p-6 rounded-2xl feature-card-hover"
+              className="glass-effect p-6 rounded-2xl feature-card-hover"
             >
               <div className="p-3 bg-white dark:bg-slate-700 rounded-xl inline-block mb-4 shadow-sm">
                 {feature.icon}
@@ -174,7 +206,11 @@ export default function HomePage() {
       </section>
       
       {/* Testimonials Section */}
-      <section ref={testimonialsRef} id="testimonials" className="py-20 container-padding bg-gradient-cool">
+      <section 
+        ref={testimonialsRef} 
+        id="testimonials" 
+        className={`py-20 container-padding scroll-section scroll-section-${scrollSection}`}
+      >
         <div className="text-center mb-16">
           <h2 className="text-gradient mb-4">What Our Users Say</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -202,7 +238,7 @@ export default function HomePage() {
           ].map((testimonial, index) => (
             <div 
               key={index} 
-              className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm card-hover"
+              className="glass-effect p-6 rounded-2xl shadow-sm card-hover"
             >
               <div className="mb-4 text-4xl text-primary">"</div>
               <p className="text-muted-foreground mb-4">{testimonial.quote}</p>
@@ -240,7 +276,11 @@ export default function HomePage() {
       </section>
       
       {/* Contact Section */}
-      <section ref={contactRef} id="contact" className="py-20 container-padding bg-white dark:bg-slate-900">
+      <section 
+        ref={contactRef} 
+        id="contact" 
+        className={`py-20 container-padding scroll-section scroll-section-${scrollSection}`}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-gradient font-bold mb-6">Get In Touch</h2>
@@ -281,7 +321,7 @@ export default function HomePage() {
             </div>
           </div>
           
-          <div className="bg-secondary/50 dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-sm">
+          <div className="glass-effect rounded-2xl p-6 md:p-8">
             <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
             <form className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -335,7 +375,7 @@ export default function HomePage() {
       </section>
       
       {/* Newsletter */}
-      <section className="py-12 container-padding bg-gradient-cool">
+      <section className={`py-12 container-padding scroll-section scroll-section-${scrollSection}`}>
         <div className="max-w-4xl mx-auto text-center">
           <h3 className="text-2xl font-bold mb-4">Stay Updated</h3>
           <p className="text-muted-foreground mb-6">
@@ -356,7 +396,7 @@ export default function HomePage() {
       </section>
       
       {/* Footer */}
-      <footer className="py-12 bg-white dark:bg-slate-900 border-t">
+      <footer className="py-12 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 border-t">
         <div className="container-padding">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
@@ -382,7 +422,7 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4">Product</h4>
               <ul className="space-y-2">
-                <li><a href="#features" className="text-muted-foreground hover:text-primary transition-colors">Features</a></li>
+                <li><button onClick={() => scrollToSection(featuresRef)} className="text-muted-foreground hover:text-primary transition-colors">Features</button></li>
                 <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Pricing</a></li>
                 <li><Link to="/dashboard" className="text-muted-foreground hover:text-primary transition-colors">Demo</Link></li>
                 <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">API</a></li>
@@ -478,3 +518,4 @@ function Phone(props: any) {
     </svg>
   )
 }
+

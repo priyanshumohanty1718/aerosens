@@ -1,4 +1,5 @@
 
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -149,11 +150,11 @@
   }
 
   .bg-gradient-cool {
-    @apply bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800;
+    @apply bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800/80;
   }
 
   .bg-gradient-warm {
-    @apply bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-900 dark:to-indigo-900/50;
+    @apply bg-gradient-to-br from-slate-50 to-purple-50 dark:from-slate-900 dark:to-blue-950/40;
   }
 
   .feature-card-hover {
@@ -163,4 +164,38 @@
   .section-divider {
     @apply h-px w-full max-w-md mx-auto bg-gradient-to-r from-transparent via-muted-foreground/30 to-transparent my-16;
   }
+  
+  /* Scroll-based styles for homepage sections */
+  .scroll-section {
+    @apply transition-all duration-500;
+  }
+  
+  .scroll-section-1 {
+    @apply bg-gradient-to-b from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-950/40;
+  }
+  
+  .scroll-section-2 {
+    @apply bg-gradient-to-b from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40;
+  }
+  
+  .scroll-section-3 {
+    @apply bg-gradient-to-b from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40;
+  }
+  
+  .scroll-section-4 {
+    @apply bg-gradient-to-b from-purple-50 to-slate-50 dark:from-purple-950/40 dark:to-slate-900;
+  }
+  
+  /* Floating card styles for better alignment */
+  .floating-card {
+    @apply absolute glass-effect rounded-2xl p-4 shadow-lg;
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
 }
+
