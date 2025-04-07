@@ -1,34 +1,58 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 export function NewsletterSection() {
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setEmail("");
-    // In a real app, would handle newsletter signup
-    alert(`Thanks for signing up with ${email}! We'll be in touch soon.`);
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setEmail("");
+      toast({
+        title: "Subscription confirmed!",
+        description: `Thanks for signing up with ${email}! We'll be in touch soon.`,
+        variant: "default",
+      });
+    }, 1000);
   };
 
   return (
-    <section className="py-12 container-padding scroll-section">
+    <section className="py-16 md:py-20 container-padding scroll-section">
       <div className="max-w-4xl mx-auto text-center">
-        <h3 className="text-2xl font-bold mb-4">Stay Updated</h3>
-        <p className="text-muted-foreground mb-6">
+        <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-teal-500">
+          Stay Updated
+        </h3>
+        <p className="text-muted-foreground mb-8 text-lg max-w-2xl mx-auto">
           Subscribe to our newsletter for the latest updates and agricultural insights.
         </p>
-        <form className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto" onSubmit={handleSubmit}>
+        <form 
+          className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          onSubmit={handleSubmit}
+        >
           <input
             type="email"
             placeholder="Your email address"
-            className="flex-1 px-4 py-2 rounded-xl border border-input shadow-sm"
+            className="flex-1 px-4 py-3 rounded-2xl border border-input shadow-sm bg-background focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <Button type="submit" variant="gradient">Subscribe</Button>
+          <Button 
+            type="submit" 
+            variant="gradient" 
+            disabled={isSubmitting}
+            className="shadow-lg hover:shadow-primary/20 transition-all duration-300"
+          >
+            {isSubmitting ? "Subscribing..." : "Subscribe"}
+          </Button>
         </form>
       </div>
     </section>

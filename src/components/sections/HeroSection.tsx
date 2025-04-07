@@ -2,16 +2,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Thermometer, Cloud } from "lucide-react";
+import { Thermometer, Cloud, ArrowRight } from "lucide-react";
 import { WaterDropIcon } from "@/components/icons/WaterDropIcon";
 import { LeafIcon } from "@/components/icons/LeafIcon";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden py-20 md:py-32 container-padding scroll-section scroll-section-1">
+    <section id="home" className="relative overflow-hidden py-20 md:py-28 lg:py-32 container-padding scroll-section scroll-section-1">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="space-y-8 animate-slide-up">
-          <h1 className="text-gradient font-bold tracking-tight">
+          <h1 className="text-gradient font-bold tracking-tight leading-tight">
             Smart Crop Monitoring System for Modern Agriculture
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground">
@@ -19,19 +19,20 @@ export function HeroSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link to="/register">
-              <Button size="lg" variant="gradient" className="w-full sm:w-auto shadow-lg">
-                Get Started
+              <Button size="lg" variant="gradient" className="w-full sm:w-auto shadow-lg hover:shadow-primary/20 transition-all duration-300 group">
+                Get Started 
+                <ArrowRight className="ml-1 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link to="/dashboard">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 hover:bg-slate-100/10 dark:hover:bg-slate-800/30">
                 View Demo
               </Button>
             </Link>
           </div>
         </div>
         <div className="relative h-[450px]">
-          <div className="relative h-[400px] w-full bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden animate-fade-in">
+          <div className="relative h-[400px] w-full bg-white dark:bg-slate-800/40 rounded-3xl shadow-xl overflow-hidden animate-fade-in">
             <img 
               src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80" 
               alt="Crop field" 
@@ -57,7 +58,7 @@ export function HeroSection() {
           </div>
           
           {/* Soil Moisture - Fixed position with animation */}
-          <div className="floating-card top-0 right-0 z-10">
+          <div className="absolute top-4 right-4 z-10 glass-effect p-4 rounded-xl shadow-lg animate-float transition-all duration-300 hover:shadow-xl">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-full">
                 <WaterDropIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
@@ -70,7 +71,7 @@ export function HeroSection() {
           </div>
           
           {/* Crop Health - Fixed position with animation */}
-          <div className="floating-card bottom-0 left-0 z-10" style={{animationDelay: "1.5s"}}>
+          <div className="absolute bottom-4 left-4 z-10 glass-effect p-4 rounded-xl shadow-lg animate-float delay-300 transition-all duration-300 hover:shadow-xl">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
                 <LeafIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />

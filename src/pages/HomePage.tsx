@@ -11,10 +11,11 @@ import { FooterSection } from "@/components/sections/FooterSection";
 
 export default function HomePage() {
   const [scrollSection, setScrollSection] = useState(1);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const featuresRef = useRef<HTMLElement>(null);
   const testimonialsRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
-  const featuresRef = useRef<HTMLElement>(null);
-  const mainRef = useRef<HTMLDivElement>(null);
   
   // Handle scroll events to change background
   useEffect(() => {
@@ -34,9 +35,23 @@ export default function HomePage() {
       );
       
       setScrollSection(currentSection);
+      
+      // Add classes to sections based on visibility
+      const sections = document.querySelectorAll('.scroll-section');
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const isVisible = rect.top < windowHeight * 0.75 && rect.bottom > 0;
+        
+        if (isVisible) {
+          section.classList.add('animate-fade-in');
+        }
+      });
     };
     
     window.addEventListener('scroll', handleScroll);
+    // Initial check
+    handleScroll();
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -49,19 +64,29 @@ export default function HomePage() {
   
   return (
     <div ref={mainRef} className="min-h-screen flex flex-col">
-      <MainNav />
+      <MainNav onScrollToSection={scrollToSection} />
       
-      <HeroSection />
-      
-      <FeaturesSection />
-      
-      <TestimonialsSection />
-      
-      <CTASection />
-      
-      <ContactSection />
-      
-      <NewsletterSection />
+      <main className="flex-1">
+        <div ref={heroRef}>
+          <HeroSection />
+        </div>
+        
+        <div ref={featuresRef} id="features">
+          <FeaturesSection />
+        </div>
+        
+        <div ref={testimonialsRef} id="testimonials">
+          <TestimonialsSection />
+        </div>
+        
+        <CTASection />
+        
+        <div ref={contactRef} id="contact">
+          <ContactSection />
+        </div>
+        
+        <NewsletterSection />
+      </main>
       
       <FooterSection onScrollToSection={scrollToSection} />
     </div>
