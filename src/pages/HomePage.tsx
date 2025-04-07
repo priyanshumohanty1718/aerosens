@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/MainNav";
@@ -14,18 +14,26 @@ import {
   ShieldCheck, 
   Github, 
   Linkedin, 
-  Twitter 
+  Twitter,
+  ExternalLink
 } from "lucide-react";
 import { WaterDropIcon } from "@/components/icons/WaterDropIcon";
+import { LeafIcon } from "@/components/icons/LeafIcon";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
+  const testimonialsRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setEmail("");
     // In a real app, would handle newsletter signup
     alert(`Thanks for signing up with ${email}! We'll be in touch soon.`);
+  };
+
+  const scrollToSection = (ref: React.RefObject<HTMLElement>) => {
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
   
   return (
@@ -34,10 +42,10 @@ export default function HomePage() {
       
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 md:py-32 container-padding">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-900 dark:to-slate-800 -z-10" />
+        <div className="absolute inset-0 bg-gradient-warm -z-10" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8 animate-slide-up">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+            <h1 className="text-gradient font-bold tracking-tight">
               Smart Crop Monitoring System for Modern Agriculture
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground">
@@ -45,7 +53,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/register">
-                <Button size="lg" className="w-full sm:w-auto">
+                <Button size="lg" variant="gradient" className="w-full sm:w-auto shadow-lg">
                   Get Started
                 </Button>
               </Link>
@@ -57,31 +65,35 @@ export default function HomePage() {
             </div>
           </div>
           <div className="relative">
-            <div className="relative h-[400px] w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+            <div className="relative h-[400px] w-full bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden animate-fade-in">
               <img 
                 src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80" 
                 alt="Crop field" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover opacity-90"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm p-4 rounded-lg">
-                    <div className="text-primary font-semibold">Temperature</div>
+                  <div className="glass-effect p-4 rounded-xl">
+                    <div className="text-primary font-semibold flex items-center">
+                      <Thermometer className="h-4 w-4 mr-1.5" /> Temperature
+                    </div>
                     <div className="text-2xl font-bold">27.5°C</div>
                   </div>
-                  <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm p-4 rounded-lg">
-                    <div className="text-primary font-semibold">Humidity</div>
+                  <div className="glass-effect p-4 rounded-xl">
+                    <div className="text-primary font-semibold flex items-center">
+                      <Cloud className="h-4 w-4 mr-1.5" /> Humidity
+                    </div>
                     <div className="text-2xl font-bold">68%</div>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="absolute -top-6 -right-6 bg-white dark:bg-slate-800 shadow-lg rounded-2xl p-4 animate-slide-down">
+            <div className="absolute -top-6 -right-6 glass-effect rounded-2xl p-4 animate-slide-down">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-full">
-                  <Cloud className="h-5 w-5 text-green-600 dark:text-green-400" />
+                  <WaterDropIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
                 </div>
                 <div>
                   <div className="text-sm font-medium">Soil Moisture</div>
@@ -90,10 +102,10 @@ export default function HomePage() {
               </div>
             </div>
             
-            <div className="absolute -bottom-6 -left-6 bg-white dark:bg-slate-800 shadow-lg rounded-2xl p-4 animate-slide-up">
+            <div className="absolute -bottom-6 -left-6 glass-effect rounded-2xl p-4 animate-slide-up">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                  <LineChart className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <LeafIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
                   <div className="text-sm font-medium">Crop Health</div>
@@ -108,7 +120,7 @@ export default function HomePage() {
       {/* Features Section */}
       <section id="features" className="py-20 container-padding bg-white dark:bg-slate-900">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Key Features</h2>
+          <h2 className="text-gradient mb-4">Key Features</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             AeroSense provides a comprehensive suite of tools to monitor and analyze crop conditions without physical sensors.
           </p>
@@ -127,7 +139,7 @@ export default function HomePage() {
               description: "Monitor soil moisture levels and nutrient content to optimize irrigation schedules."
             },
             {
-              icon: <LineChart className="h-8 w-8 text-green-500" />,
+              icon: <LeafIcon className="h-8 w-8 text-green-500" />,
               title: "Crop Health Tracking",
               description: "Track crop health indices to identify and address issues before they escalate."
             },
@@ -149,9 +161,9 @@ export default function HomePage() {
           ].map((feature, index) => (
             <div 
               key={index} 
-              className="bg-secondary/50 dark:bg-slate-800 p-6 rounded-2xl card-hover"
+              className="bg-secondary/50 dark:bg-slate-800 p-6 rounded-2xl feature-card-hover"
             >
-              <div className="p-3 bg-white dark:bg-slate-700 rounded-xl inline-block mb-4">
+              <div className="p-3 bg-white dark:bg-slate-700 rounded-xl inline-block mb-4 shadow-sm">
                 {feature.icon}
               </div>
               <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
@@ -162,9 +174,9 @@ export default function HomePage() {
       </section>
       
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 container-padding bg-blue-50 dark:bg-slate-800/50">
+      <section ref={testimonialsRef} id="testimonials" className="py-20 container-padding bg-gradient-cool">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Users Say</h2>
+          <h2 className="text-gradient mb-4">What Our Users Say</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             AeroSense is helping farmers, researchers, and students across the country.
           </p>
@@ -192,7 +204,7 @@ export default function HomePage() {
               key={index} 
               className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm card-hover"
             >
-              <div className="mb-4 text-4xl">"</div>
+              <div className="mb-4 text-4xl text-primary">"</div>
               <p className="text-muted-foreground mb-4">{testimonial.quote}</p>
               <div className="mt-auto">
                 <div className="font-semibold">{testimonial.author}</div>
@@ -203,10 +215,12 @@ export default function HomePage() {
         </div>
       </section>
       
+      <div className="section-divider"></div>
+      
       {/* CTA Section */}
       <section className="py-20 container-padding bg-gradient-to-br from-primary to-blue-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Farming Approach?</h2>
+          <h2 className="font-bold mb-6 text-white">Ready to Transform Your Farming Approach?</h2>
           <p className="text-xl mb-8 text-white/90">
             Join thousands of users who are already benefiting from AeroSense's powerful simulation and monitoring capabilities.
           </p>
@@ -226,10 +240,10 @@ export default function HomePage() {
       </section>
       
       {/* Contact Section */}
-      <section id="contact" className="py-20 container-padding bg-white dark:bg-slate-900">
+      <section ref={contactRef} id="contact" className="py-20 container-padding bg-white dark:bg-slate-900">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-3xl font-bold mb-6">Get In Touch</h2>
+            <h2 className="text-gradient font-bold mb-6">Get In Touch</h2>
             <p className="text-lg text-muted-foreground mb-8">
               Have questions about AeroSense? We're here to help! Fill out the form and our team will get back to you shortly.
             </p>
@@ -267,7 +281,7 @@ export default function HomePage() {
             </div>
           </div>
           
-          <div className="bg-secondary/50 dark:bg-slate-800 rounded-2xl p-6 md:p-8">
+          <div className="bg-secondary/50 dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-sm">
             <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
             <form className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -277,7 +291,7 @@ export default function HomePage() {
                   </label>
                   <input
                     id="name"
-                    className="w-full px-3 py-2 border border-input rounded-lg bg-background"
+                    className="w-full px-3 py-2 border border-input rounded-xl bg-background shadow-sm"
                     placeholder="Your name"
                   />
                 </div>
@@ -288,7 +302,7 @@ export default function HomePage() {
                   <input
                     id="email"
                     type="email"
-                    className="w-full px-3 py-2 border border-input rounded-lg bg-background"
+                    className="w-full px-3 py-2 border border-input rounded-xl bg-background shadow-sm"
                     placeholder="Your email"
                   />
                 </div>
@@ -299,7 +313,7 @@ export default function HomePage() {
                 </label>
                 <input
                   id="subject"
-                  className="w-full px-3 py-2 border border-input rounded-lg bg-background"
+                  className="w-full px-3 py-2 border border-input rounded-xl bg-background shadow-sm"
                   placeholder="Message subject"
                 />
               </div>
@@ -310,18 +324,18 @@ export default function HomePage() {
                 <textarea
                   id="message"
                   rows={4}
-                  className="w-full px-3 py-2 border border-input rounded-lg bg-background resize-none"
+                  className="w-full px-3 py-2 border border-input rounded-xl bg-background shadow-sm resize-none"
                   placeholder="Your message"
                 />
               </div>
-              <Button className="w-full">Send Message</Button>
+              <Button variant="gradient" className="w-full">Send Message</Button>
             </form>
           </div>
         </div>
       </section>
       
       {/* Newsletter */}
-      <section className="py-12 container-padding bg-blue-50 dark:bg-slate-800/50">
+      <section className="py-12 container-padding bg-gradient-cool">
         <div className="max-w-4xl mx-auto text-center">
           <h3 className="text-2xl font-bold mb-4">Stay Updated</h3>
           <p className="text-muted-foreground mb-6">
@@ -331,12 +345,12 @@ export default function HomePage() {
             <input
               type="email"
               placeholder="Your email address"
-              className="flex-1 px-4 py-2 rounded-lg border border-input"
+              className="flex-1 px-4 py-2 rounded-xl border border-input shadow-sm"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <Button type="submit">Subscribe</Button>
+            <Button type="submit" variant="gradient">Subscribe</Button>
           </form>
         </div>
       </section>
@@ -353,13 +367,13 @@ export default function HomePage() {
                 Modern agriculture monitoring for everyone, no expensive hardware required.
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="text-muted-foreground hover:text-primary">
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                   <Twitter className="h-5 w-5" />
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary">
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                   <Linkedin className="h-5 w-5" />
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary">
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                   <Github className="h-5 w-5" />
                 </a>
               </div>
@@ -368,30 +382,30 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4">Product</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Features</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Pricing</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Demo</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary">API</a></li>
+                <li><a href="#features" className="text-muted-foreground hover:text-primary transition-colors">Features</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Pricing</a></li>
+                <li><Link to="/dashboard" className="text-muted-foreground hover:text-primary transition-colors">Demo</Link></li>
+                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">API</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold mb-4">Resources</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Documentation</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Blog</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Community</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Support</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Documentation</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Community</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Support</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-muted-foreground hover:text-primary">About</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Careers</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Contact</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary">Privacy Policy</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">About</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Careers</a></li>
+                <li><button onClick={() => scrollToSection(contactRef)} className="text-muted-foreground hover:text-primary transition-colors">Contact</button></li>
+                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Privacy Policy</a></li>
               </ul>
             </div>
           </div>
@@ -461,26 +475,6 @@ function Phone(props: any) {
       strokeLinejoin="round"
     >
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  )
-}
-
-function Droplets(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z" />
-      <path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.94" />
     </svg>
   )
 }
