@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Thermometer, Droplets, LineChart, Seedling, AlertTriangle } from "lucide-react";
+import { Thermometer, Droplets, LineChart, Sprout, AlertTriangle } from "lucide-react";
 import { 
   Card, 
   CardContent, 
@@ -134,7 +134,7 @@ export default function DashboardPage() {
         <MetricsCard
           title="Average Soil Moisture"
           value={`${summary.avgSoilMoisture.toFixed(1)}%`}
-          icon={<Seedling className="h-4 w-4" />}
+          icon={<Sprout className="h-4 w-4" />}
           description="Last 24 hours"
           trend={{ value: 3.7, isPositive: false }}
         />

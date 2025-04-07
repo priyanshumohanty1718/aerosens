@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -30,7 +29,8 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { generatePlots, type Plot } from "@/lib/mockData";
-import { Search, Plus, MapPin, Thermometer, Droplets, Leaf } from "lucide-react";
+import { Search, Plus, MapPin, Thermometer, Droplets } from "lucide-react";
+import { LeafIcon } from "@/components/icons/LeafIcon";
 import { Link } from "react-router-dom";
 
 export default function PlotsPage() {
@@ -40,10 +40,8 @@ export default function PlotsPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { toast } = useToast();
   
-  // Status filter
   const [statusFilter, setStatusFilter] = useState<"all" | "healthy" | "warning" | "critical">("all");
   
-  // New plot form state
   const [newPlot, setNewPlot] = useState({
     name: "",
     location: "",
@@ -51,14 +49,10 @@ export default function PlotsPage() {
     cropType: "",
   });
   
-  // Load mock data
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Simulate API loading delay
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Generate mock data
         const plotsData = generatePlots(12);
         setPlots(plotsData);
         setIsLoading(false);
@@ -75,7 +69,6 @@ export default function PlotsPage() {
     loadData();
   }, [toast]);
   
-  // Filtered plots based on search query and status filter
   const filteredPlots = plots.filter(plot => {
     const matchesSearch = 
       plot.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -88,7 +81,6 @@ export default function PlotsPage() {
   });
   
   const handleCreatePlot = () => {
-    // Validate form
     if (!newPlot.name || !newPlot.location || !newPlot.size || !newPlot.cropType) {
       toast({
         title: "Missing information",
@@ -98,7 +90,6 @@ export default function PlotsPage() {
       return;
     }
     
-    // Generate a new plot
     const plotId = `plot-${Date.now()}`;
     const newPlotData: Plot = {
       id: plotId,
@@ -110,10 +101,8 @@ export default function PlotsPage() {
       status: 'healthy',
     };
     
-    // Add to plots array
     setPlots([newPlotData, ...plots]);
     
-    // Reset form and close dialog
     setNewPlot({
       name: "",
       location: "",
@@ -232,7 +221,6 @@ export default function PlotsPage() {
         </Dialog>
       </div>
       
-      {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
@@ -259,7 +247,6 @@ export default function PlotsPage() {
         </Select>
       </div>
       
-      {/* Plot Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredPlots.length === 0 ? (
           <div className="col-span-full flex items-center justify-center p-12 bg-secondary/40 rounded-2xl">
@@ -300,7 +287,7 @@ export default function PlotsPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-secondary/50 dark:bg-secondary/20 p-3 rounded-lg">
                     <div className="text-xs text-muted-foreground flex items-center mb-1">
-                      <Leaf className="h-3.5 w-3.5 mr-1" />
+                      <LeafIcon className="h-3.5 w-3.5 mr-1" />
                       Crop Type
                     </div>
                     <div className="font-medium">{plot.cropType}</div>
@@ -366,24 +353,4 @@ export default function PlotsPage() {
       </div>
     </div>
   );
-}
-
-function Leaf(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-    </svg>
-  )
 }

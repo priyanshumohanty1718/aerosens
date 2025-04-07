@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/MainNav";
+import Logo from "@/components/Logo";
 import { 
   Cloud, 
   Thermometer, 
-  Droplets, 
   LineChart, 
   Bell, 
   Globe, 
@@ -16,6 +16,7 @@ import {
   Linkedin, 
   Twitter 
 } from "lucide-react";
+import { WaterDropIcon } from "@/components/icons/WaterDropIcon";
 
 export default function HomePage() {
   const [email, setEmail] = useState("");
@@ -121,7 +122,7 @@ export default function HomePage() {
               description: "Track temperature, humidity, and other environmental factors affecting crop growth."
             },
             {
-              icon: <Droplets className="h-8 w-8 text-blue-500" />,
+              icon: <WaterDropIcon className="h-8 w-8 text-blue-500" />,
               title: "Soil Analysis",
               description: "Monitor soil moisture levels and nutrient content to optimize irrigation schedules."
             },
