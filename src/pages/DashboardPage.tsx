@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Thermometer, Droplets, LineChart, Sprout, AlertTriangle } from "lucide-react";
 import { 
@@ -41,7 +42,7 @@ export default function DashboardPage() {
         
         // Generate mock data
         const plotsData = generatePlots();
-        const alertsData = generateAlerts(); // Fixed: removed argument
+        const alertsData = generateAlerts();
         
         setPlots(plotsData);
         setAlerts(alertsData);
@@ -67,7 +68,7 @@ export default function DashboardPage() {
   // When selected plot changes, update historical data
   useEffect(() => {
     if (selectedPlot) {
-      setHistoricalData(generateHistoricalData()); // Fixed: removed selectedPlot argument
+      setHistoricalData(generateHistoricalData());
     }
   }, [selectedPlot]);
   

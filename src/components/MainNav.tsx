@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -13,6 +13,15 @@ type MainNavProps = {
 export function MainNav({ onScrollToSection }: MainNavProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  // Check if we're on the dashboard or other internal pages
+  const isDashboardPage = location.pathname.includes('/dashboard') || 
+                          location.pathname.includes('/plots') || 
+                          location.pathname.includes('/crops') || 
+                          location.pathname.includes('/alerts') || 
+                          location.pathname.includes('/historical') || 
+                          location.pathname.includes('/settings');
   
   useEffect(() => {
     const handleScroll = () => {
@@ -41,9 +50,13 @@ export function MainNav({ onScrollToSection }: MainNavProps) {
     >
       <div className="container-padding">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center">
-            <Logo />
-          </Link>
+          {!isDashboardPage && (
+            <Link to="/" className="flex items-center">
+              <Logo />
+            </Link>
+          )}
+          
+          {isDashboardPage && <div className="w-40"></div>}
           
           <nav className="hidden md:flex items-center space-x-6">
             <button 

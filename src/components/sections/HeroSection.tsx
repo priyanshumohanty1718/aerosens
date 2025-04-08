@@ -58,7 +58,7 @@ export function HeroSection() {
           </div>
           
           {/* Soil Moisture - Fixed position with animation */}
-          <div className="absolute top-4 right-4 z-10 glass-effect p-4 rounded-xl shadow-lg animate-float transition-all duration-300 hover:shadow-xl">
+          <div className="absolute -top-4 -right-4 z-10 glass-effect p-4 rounded-xl shadow-lg animate-float transition-all duration-300 hover:shadow-xl">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-full">
                 <WaterDropIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
@@ -71,7 +71,7 @@ export function HeroSection() {
           </div>
           
           {/* Crop Health - Fixed position with animation */}
-          <div className="absolute bottom-4 left-4 z-10 glass-effect p-4 rounded-xl shadow-lg animate-float delay-300 transition-all duration-300 hover:shadow-xl">
+          <div className="absolute -bottom-4 -left-4 z-10 glass-effect p-4 rounded-xl shadow-lg animate-float delay-300 transition-all duration-300 hover:shadow-xl">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
                 <LeafIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
