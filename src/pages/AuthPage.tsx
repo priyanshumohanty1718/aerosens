@@ -1,7 +1,7 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,7 +23,14 @@ interface AuthProps {
 export default function AuthPage({ defaultTab = "login" }: AuthProps) {
   const [activeTab, setActiveTab] = useState<"login" | "register">(defaultTab);
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const { user, signIn, signUp } = useAuth();
+  
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
   
   // Login form state
   const [loginEmail, setLoginEmail] = useState("");
@@ -42,30 +49,9 @@ export default function AuthPage({ defaultTab = "login" }: AuthProps) {
     setIsLoginLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For demo, always succeed with demo@aerosense.io / password
-      if (loginEmail === "demo@aerosense.io" && loginPassword === "password") {
-        toast({
-          title: "Login successful",
-          description: "Welcome back to AeroSense Dashboard",
-        });
-        navigate("/dashboard");
-      } else {
-        // Demo credentials for easy testing
-        toast({
-          title: "Login failed",
-          description: "Try with demo@aerosense.io and password",
-          variant: "destructive",
-        });
-      }
+      await signIn(loginEmail, loginPassword);
     } catch (error) {
-      toast({
-        title: "Login failed",
-        description: "Please check your credentials and try again",
-        variant: "destructive",
-      });
+      console.error("Login error in component:", error);
     } finally {
       setIsLoginLoading(false);
     }
@@ -75,38 +61,18 @@ export default function AuthPage({ defaultTab = "login" }: AuthProps) {
     e.preventDefault();
     
     if (registerPassword !== registerConfirmPassword) {
-      toast({
-        title: "Passwords don't match",
-        description: "Please make sure your passwords match",
-        variant: "destructive",
-      });
       return;
     }
     
     setIsRegisterLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await signUp(registerEmail, registerPassword, registerName);
       
-      toast({
-        title: "Registration successful",
-        description: "Your account has been created. You can now log in.",
-      });
-      
-      // Reset form and switch to login tab
-      setRegisterName("");
-      setRegisterEmail("");
-      setRegisterPassword("");
-      setRegisterConfirmPassword("");
-      setActiveTab("login");
+      // Form is reset in the useEffect when redirected
       
     } catch (error) {
-      toast({
-        title: "Registration failed",
-        description: "Please try again later",
-        variant: "destructive",
-      });
+      console.error("Register error in component:", error);
     } finally {
       setIsRegisterLoading(false);
     }
@@ -143,7 +109,7 @@ export default function AuthPage({ defaultTab = "login" }: AuthProps) {
                       <Input 
                         id="email" 
                         type="email" 
-                        placeholder="demo@aerosense.io" 
+                        placeholder="your@email.com" 
                         value={loginEmail}
                         onChange={(e) => setLoginEmail(e.target.value)}
                         required
@@ -159,7 +125,7 @@ export default function AuthPage({ defaultTab = "login" }: AuthProps) {
                       <Input 
                         id="password" 
                         type="password"
-                        placeholder="password"
+                        placeholder="••••••••"
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
                         required
@@ -214,7 +180,7 @@ export default function AuthPage({ defaultTab = "login" }: AuthProps) {
                       <Input 
                         id="register-email" 
                         type="email" 
-                        placeholder="john.doe@example.com" 
+                        placeholder="your@email.com" 
                         value={registerEmail}
                         onChange={(e) => setRegisterEmail(e.target.value)}
                         required
