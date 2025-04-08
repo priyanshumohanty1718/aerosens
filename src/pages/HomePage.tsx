@@ -12,10 +12,10 @@ import { FooterSection } from "@/components/sections/FooterSection";
 export default function HomePage() {
   const [scrollSection, setScrollSection] = useState(1);
   const mainRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
-  const featuresRef = useRef<HTMLElement>(null);
-  const testimonialsRef = useRef<HTMLElement>(null);
-  const contactRef = useRef<HTMLElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
+  const testimonialsRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
   
   // Handle scroll events to change background
   useEffect(() => {
