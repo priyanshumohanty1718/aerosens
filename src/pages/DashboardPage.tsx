@@ -42,7 +42,7 @@ export default function DashboardPage() {
         
         // Generate mock data
         const plotsData = generatePlots();
-        const alertsData = generateAlerts(plotsData);
+        const alertsData = generateAlerts(); // Fixed: removed argument
         
         setPlots(plotsData);
         setAlerts(alertsData);

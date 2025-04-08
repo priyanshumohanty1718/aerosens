@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -48,7 +49,7 @@ export default function AlertsPage() {
         
         // Generate mock data
         const plotsData = generatePlots();
-        const alertsData = generateAlerts(plotsData);
+        const alertsData = generateAlerts(); // Fixed: removed argument
         
         setAlerts(alertsData);
         setIsLoading(false);
