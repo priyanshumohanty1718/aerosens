@@ -8,6 +8,7 @@ import { CTASection } from "@/components/sections/CTASection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { NewsletterSection } from "@/components/sections/NewsletterSection";
 import { FooterSection } from "@/components/sections/FooterSection";
+import { startSimulation, stopSimulation } from "@/lib/mockData";
 
 export default function HomePage() {
   const [scrollSection, setScrollSection] = useState(1);
@@ -16,6 +17,16 @@ export default function HomePage() {
   const featuresRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
+  
+  // Start simulation when the component mounts
+  useEffect(() => {
+    startSimulation();
+    
+    // Cleanup: stop simulation when component unmounts
+    return () => {
+      stopSimulation();
+    };
+  }, []);
   
   // Handle scroll events to change background
   useEffect(() => {
@@ -62,8 +73,27 @@ export default function HomePage() {
     }
   };
   
+  // Get background class based on scroll position
+  const getBackgroundClass = () => {
+    switch (scrollSection) {
+      case 1:
+        return "bg-gradient-to-b from-background to-background/90";
+      case 2:
+        return "bg-gradient-to-b from-background/90 to-background/80";
+      case 3:
+        return "bg-gradient-to-b from-background/80 to-background/90";
+      case 4:
+        return "bg-gradient-to-b from-background/90 to-background";
+      default:
+        return "bg-background";
+    }
+  };
+  
   return (
-    <div ref={mainRef} className="min-h-screen flex flex-col">
+    <div 
+      ref={mainRef} 
+      className={`min-h-screen flex flex-col transition-colors duration-1000 ${getBackgroundClass()}`}
+    >
       <MainNav onScrollToSection={scrollToSection} />
       
       <main className="flex-1">

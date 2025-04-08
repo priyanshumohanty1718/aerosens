@@ -10,6 +10,17 @@ export function NewsletterSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Basic email validation
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     
     // Simulate API call
@@ -25,7 +36,7 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="py-16 md:py-20 container-padding scroll-section">
+    <section className="py-16 md:py-20 container-padding scroll-section bg-gradient-to-b from-background to-background/70">
       <div className="max-w-4xl mx-auto text-center">
         <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-teal-500">
           Stay Updated
@@ -49,7 +60,7 @@ export function NewsletterSection() {
             type="submit" 
             variant="gradient" 
             disabled={isSubmitting}
-            className="shadow-lg hover:shadow-primary/20 transition-all duration-300"
+            className="shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:scale-105"
           >
             {isSubmitting ? "Subscribing..." : "Subscribe"}
           </Button>
