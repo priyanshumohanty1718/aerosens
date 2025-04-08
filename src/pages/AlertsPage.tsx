@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -48,7 +47,7 @@ export default function AlertsPage() {
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         // Generate mock data
-        const plotsData = generatePlots(10);
+        const plotsData = generatePlots();
         const alertsData = generateAlerts(plotsData);
         
         setAlerts(alertsData);

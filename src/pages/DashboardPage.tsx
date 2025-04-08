@@ -41,7 +41,7 @@ export default function DashboardPage() {
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         // Generate mock data
-        const plotsData = generatePlots(8);
+        const plotsData = generatePlots();
         const alertsData = generateAlerts(plotsData);
         
         setPlots(plotsData);
@@ -49,7 +49,7 @@ export default function DashboardPage() {
         setSelectedPlot(plotsData[0].id);
         
         // Generate historical data for the first plot
-        setHistoricalData(generateHistoricalData(plotsData[0].id, 30));
+        setHistoricalData(generateHistoricalData(plotsData[0].id));
         
         setIsLoading(false);
       } catch (error) {
@@ -68,7 +68,7 @@ export default function DashboardPage() {
   // When selected plot changes, update historical data
   useEffect(() => {
     if (selectedPlot) {
-      setHistoricalData(generateHistoricalData(selectedPlot, 30));
+      setHistoricalData(generateHistoricalData(selectedPlot));
     }
   }, [selectedPlot]);
   
