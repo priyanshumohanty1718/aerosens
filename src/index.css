@@ -100,9 +100,15 @@
   * {
     @apply border-border;
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans cursor-none;
     font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -132,6 +138,19 @@
   .container-padding {
     @apply px-4 sm:px-6 lg:px-8;
   }
+  
+  /* Premium UI styles */
+  a, button, [role="button"] {
+    @apply cursor-none;
+  }
+  
+  /* Prevent blur on iOS */
+  @supports (-webkit-touch-callout: none) {
+    .backdrop-blur-md {
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+  }
 }
 
 /* Custom utility classes */
@@ -140,8 +159,28 @@
     @apply bg-white/70 dark:bg-black/50 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-md;
   }
   
+  .glass-effect-strong {
+    @apply bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-white/30 dark:border-white/10 shadow-lg;
+  }
+  
+  .premium-card {
+    @apply relative overflow-hidden bg-gradient-to-br from-white/90 to-white/70 dark:from-gray-800/70 dark:to-gray-900/90 backdrop-blur-md shadow-xl border border-white/20 dark:border-white/5;
+  }
+  
+  .premium-card::before {
+    @apply content-[''] absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer;
+  }
+  
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-teal-500;
+  }
+  
+  .text-gradient-cool {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-400;
+  }
+  
+  .text-gradient-warm {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-amber-500;
   }
 
   .bg-gradient-primary {
@@ -189,7 +228,7 @@
     @apply bg-gradient-to-b from-purple-50 to-slate-50 dark:from-purple-950/30 dark:to-slate-900;
   }
   
-  /* Floating card styles for better alignment */
+  /* Premium animation effects */
   .floating-card {
     @apply absolute glass-effect rounded-xl p-4 shadow-lg;
   }
@@ -200,11 +239,90 @@
     100% { transform: translateY(0px); }
   }
   
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+  
+  @keyframes shine {
+    0% { transform: rotate(45deg) translateX(-150%); }
+    100% { transform: rotate(45deg) translateX(150%); }
+  }
+  
   .animate-float {
     animation: float 4s ease-in-out infinite;
   }
   
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+  
+  .animate-shine {
+    animation: shine 3s infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 3s infinite;
+  }
+  
   .delay-300 {
     animation-delay: 0.3s;
+  }
+  
+  /* Kinetic typography */
+  .kinetic-text {
+    @apply relative inline-block overflow-hidden py-1;
+  }
+  
+  .kinetic-text span {
+    @apply relative inline-block transition-transform duration-500;
+  }
+  
+  .kinetic-text:hover span {
+    transform: translateY(-100%);
+  }
+  
+  .kinetic-text span::after {
+    @apply content-[attr(data-text)] absolute top-full left-0 text-primary;
+  }
+  
+  /* Interactive button effects */
+  .btn-premium {
+    @apply relative overflow-hidden transition-all duration-300 
+    bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary 
+    text-white shadow hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5;
+  }
+  
+  .btn-premium::after {
+    @apply content-[''] absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent 
+    -translate-x-full animate-shimmer opacity-0 hover:opacity-100;
+  }
+  
+  /* Navigation highlight effects */
+  .nav-link {
+    @apply relative overflow-hidden;
+  }
+  
+  .nav-link::after {
+    @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 ease-in-out;
+  }
+  
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+  
+  .nav-link.active::after {
+    @apply w-full;
+  }
+  
+  /* 3D button effects */
+  .btn-3d {
+    @apply transition-all duration-200 shadow-md 
+    active:translate-y-0.5 active:shadow-none hover:shadow-lg;
+  }
+  
+  /* Mouse trail effect */
+  .mouse-particle {
+    @apply fixed pointer-events-none rounded-full bg-primary mix-blend-screen;
+    transform: translate(-50%, -50%);
   }
 }
