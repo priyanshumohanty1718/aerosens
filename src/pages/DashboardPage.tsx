@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -33,9 +32,9 @@ export default function DashboardPage() {
         // Simulate API loading delay
         await new Promise(resolve => setTimeout(resolve, 1000));
         
-        // Generate mock data
+        // Generate mock data - Fix: Remove the argument from generateAlerts()
         const plotsData = generatePlots();
-        const alertsData = generateAlerts(); // Fixed: Removed the argument
+        const alertsData = generateAlerts();
         
         setPlots(plotsData);
         setAlerts(alertsData);
