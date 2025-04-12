@@ -54,9 +54,9 @@ export function MainNav({ onScrollToSection }: MainNavProps) {
     >
       <div className="container-padding">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center">
-            <AnimatedLogo />
-          </Link>
+          <div className="flex items-center">
+            <AnimatedLogo asLink={false} />
+          </div>
           
           <nav className="hidden md:flex items-center space-x-6">
             {!isDashboardPage && (

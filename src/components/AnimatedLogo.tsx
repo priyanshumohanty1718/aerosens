@@ -6,23 +6,21 @@ import { Cloud } from 'lucide-react';
 interface AnimatedLogoProps {
   className?: string;
   variant?: 'default' | 'large';
+  asLink?: boolean;
 }
 
 export default function AnimatedLogo({ 
   className = "", 
-  variant = "default" 
+  variant = "default",
+  asLink = true
 }: AnimatedLogoProps) {
   const isLarge = variant === 'large';
   
-  return (
-    <Link 
-      to="/" 
-      className={`
-        group flex items-center space-x-2 transition-all 
-        hover:scale-105 duration-300 ${className}
-      `}
-      aria-label="AeroSense Homepage"
-    >
+  const LogoContent = () => (
+    <div className={`
+      group flex items-center space-x-2 transition-all 
+      hover:scale-105 duration-300 ${className}
+    `}>
       <div className={`
         relative ${isLarge ? 'h-12 w-12' : 'h-8 w-8'} 
         rounded-full bg-gradient-to-br from-primary via-blue-400 to-cyan-300 
@@ -50,6 +48,15 @@ export default function AnimatedLogo({
         <span className="inline-block hover:animate-bounce transition-all delay-350">s</span>
         <span className="inline-block hover:animate-bounce transition-all delay-400">e</span>
       </span>
+    </div>
+  );
+  
+  // Conditionally render as link or div based on prop
+  return asLink ? (
+    <Link to="/" aria-label="AeroSense Homepage">
+      <LogoContent />
     </Link>
+  ) : (
+    <LogoContent />
   );
 }

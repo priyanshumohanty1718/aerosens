@@ -55,28 +55,27 @@ export function CustomCursor() {
     };
   }, []);
 
-  const cursorClasses = `
-    fixed pointer-events-none z-50 transition-transform duration-150
-    flex items-center justify-center
-    ${hidden ? 'opacity-0' : 'opacity-100'} 
-    ${clicked ? 'scale-90' : ''}
-    ${linkHovered ? 'scale-150' : ''}
-  `;
-
+  // Simplified cursor with premium effects
   return (
-    <>
-      <div 
-        className={`${cursorClasses} w-5 h-5 rounded-full bg-primary/30 backdrop-blur-sm duration-200 -ml-2.5 -mt-2.5`}
-        style={{ left: `${position.x}px`, top: `${position.y}px` }}
-      />
-      <div
-        className={`${cursorClasses} w-3 h-3 rounded-full bg-primary -ml-1.5 -mt-1.5`}
-        style={{ 
-          left: `${position.x}px`, 
-          top: `${position.y}px`,
-          transition: "left 0.15s ease-out, top 0.15s ease-out"
-        }}
-      />
-    </>
+    <div 
+      className={`
+        fixed pointer-events-none z-50 transition-all duration-150
+        mix-blend-difference
+        ${hidden ? 'opacity-0' : 'opacity-100'} 
+        ${clicked ? 'scale-90' : ''}
+        ${linkHovered ? 'scale-150' : ''}
+      `}
+      style={{ 
+        left: `${position.x}px`, 
+        top: `${position.y}px`,
+        transform: `translate(-50%, -50%)`,
+        width: '24px',
+        height: '24px',
+        border: '2px solid white',
+        borderRadius: '50%',
+        transition: linkHovered ? 'transform 0.3s ease-out, opacity 0.3s ease-out, width 0.3s ease-out, height 0.3s ease-out' : 
+                   'transform 0.1s ease-out, opacity 0.1s ease-out, left 0.05s linear, top 0.05s linear'
+      }}
+    />
   );
 }

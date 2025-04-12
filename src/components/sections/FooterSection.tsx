@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Github, Linkedin, Twitter } from "lucide-react";
-import Logo from "@/components/Logo";
+import AnimatedLogo from "@/components/AnimatedLogo";
 
 interface FooterLinkProps {
   href?: string;
@@ -40,7 +40,7 @@ export function FooterSection({ onScrollToSection }: { onScrollToSection: (id: s
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="mb-4">
-              <Logo />
+              <AnimatedLogo asLink={false} />
             </div>
             <p className="text-muted-foreground mb-4">
               Modern agriculture monitoring for everyone, no expensive hardware required.
