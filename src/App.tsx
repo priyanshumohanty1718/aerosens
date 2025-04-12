@@ -7,10 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { MouseTrail } from "@/components/MouseTrail";
-import { CustomCursor } from "@/components/CustomCursor";
 import HomePage from "@/pages/HomePage";
-import AboutPage from "@/pages/AboutPage";
 import AuthPage from "@/pages/AuthPage";
 import DashboardPage from "@/pages/DashboardPage";
 import PlotsPage from "@/pages/PlotsPage";
@@ -29,12 +26,9 @@ const App = () => (
         <AuthProvider>
           <Toaster />
           <Sonner />
-          <CustomCursor />
-          <MouseTrail />
           <Routes>
             {/* Public routes */}
             <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
             <Route path="/login" element={<AuthPage defaultTab="login" />} />
             <Route path="/register" element={<AuthPage defaultTab="register" />} />
             
