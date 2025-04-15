@@ -32,7 +32,7 @@ export function ContactSection() {
               </div>
               <div>
                 <div className="font-medium">Call Us</div>
-                <div className="text-muted-foreground">+91 9876 543 210</div>
+                <div className="text-muted-foreground">+91 9583495238</div>
               </div>
             </div>
             
@@ -42,7 +42,7 @@ export function ContactSection() {
               </div>
               <div>
                 <div className="font-medium">Address</div>
-                <div className="text-muted-foreground">123 AgriTech Park, Bangalore, India</div>
+                <div className="text-muted-foreground">Bhubaneshwar, India</div>
               </div>
             </div>
           </div>
@@ -102,3 +102,4 @@ export function ContactSection() {
     </section>
   );
 }
+
