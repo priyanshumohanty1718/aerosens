@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Session, User } from "@supabase/supabase-js";
@@ -26,14 +25,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
         if (currentSession?.user) {
-          // Defer Supabase calls with setTimeout to avoid deadlocks
           setTimeout(() => {
             fetchUserProfile(currentSession.user.id);
           }, 0);
@@ -43,7 +40,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     );
 
-    // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
@@ -60,12 +56,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchUserProfile = async (userId: string) => {
     try {
-      // Fix: Use the correct Supabase query format for TypeScript
       const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
+        .from('user_profiles')
+        .select()
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error("Error fetching user profile:", error);
@@ -131,7 +126,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         description: "Please verify your email to continue",
       });
       
-      // Navigate to login after signup
       navigate("/login");
     } catch (error: any) {
       console.error("Error signing up:", error.message);

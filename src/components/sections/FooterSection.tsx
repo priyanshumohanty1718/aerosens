@@ -1,6 +1,5 @@
-
 import { Link } from "react-router-dom";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, Phone, MapPin } from "lucide-react";
 import Logo from "@/components/Logo";
 
 interface FooterLinkProps {
@@ -91,6 +90,26 @@ export function FooterSection({ onScrollToSection }: { onScrollToSection: (id: s
           </div>
         </div>
         
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-full">
+            <Phone className="h-5 w-5 text-green-600 dark:text-green-400" />
+          </div>
+          <div>
+            <div className="font-medium">Call Us</div>
+            <div className="text-muted-foreground">+91 9583495238</div>
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+            <MapPin className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+          </div>
+          <div>
+            <div className="font-medium">Address</div>
+            <div className="text-muted-foreground">Bhubaneshwar, India</div>
+          </div>
+        </div>
+
         <div className="pt-8 border-t text-center text-muted-foreground">
           <p>© {new Date().getFullYear()} AeroSense. All rights reserved.</p>
         </div>
