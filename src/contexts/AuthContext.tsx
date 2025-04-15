@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Session, User } from "@supabase/supabase-js";
@@ -56,6 +57,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchUserProfile = async (userId: string) => {
     try {
+      // Temporarily comment out the query since the table doesn't exist yet
+      // When user_profiles table is created, this can be uncommented
+      /*
       const { data, error } = await supabase
         .from('user_profiles')
         .select()
@@ -68,6 +72,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       setUserProfile(data);
+      */
+      
+      // For now, just use the user data we have
+      setUserProfile({ id: userId });
     } catch (error) {
       console.error("Error fetching user profile:", error);
     }
